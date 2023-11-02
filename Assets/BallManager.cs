@@ -16,17 +16,19 @@ public class BallManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -5)
-        {
-            transform.position = new Vector3(transform.position.x, 10, transform.position.z);
+        if(photonView.isMine) {
+            if (transform.position.y < -5)
+            {
+                transform.position = new Vector3(transform.position.x, 10, transform.position.z);
+            }
+
+            Vector2 thumbstickInput = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+
+            if (thumbstickInput != Vector2.zero)
+            {
+                Vector3 moveDirection = new Vector3(thumbstickInput.x, 0, thumbstickInput.y);
+                transform.position += moveDirection * speed * Time.deltaTime;
         }
-
-        Vector2 thumbstickInput = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-
-        if (thumbstickInput != Vector2.zero)
-        {
-            Vector3 moveDirection = new Vector3(thumbstickInput.x, 0, thumbstickInput.y);
-            transform.position += moveDirection * speed * Time.deltaTime;
         }
     }
 }
